@@ -1,0 +1,10 @@
+### Create user
+POST http://localhost:4001/api/v1/users
+Content-Type: application/json
+
+{
+  "email": "aryayun90@gmail.com",
+  "password": "PasswordRahasia",
+  "name": "Arya Yunanta",
+  "address": "Jl. Test"
+}

@@ -1,9 +1,10 @@
--- name: CreateUser :exec
+-- name: CreateUser :one
 INSERT INTO users (email,
                    password_hash,
                    name,
                    address)
-VALUES ($1, $2, $3, $4);
+VALUES ($1, $2, $3, $4)
+RETURNING id;
 
 -- name: GetUser :one
 SELECT id, email, password_hash, name, address
