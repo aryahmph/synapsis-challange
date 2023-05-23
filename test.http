@@ -8,3 +8,12 @@ Content-Type: application/json
   "name": "Arya Yunanta",
   "address": "Jl. Test"
 }
+
+### Login user
+POST http://localhost:4001/api/v1/auth
+Content-Type: application/json
+
+{
+  "email": "aryayun90@gmail.com",
+  "password": "PasswordRahasia"
+}

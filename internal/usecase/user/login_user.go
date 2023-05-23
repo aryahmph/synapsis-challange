@@ -9,7 +9,7 @@ var (
 	ErrLoginUser_WrongCredential error = errors.New("LOGIN_USER.WRONG_CREDENTIAL")
 )
 
-func (u userUsecase) Login(ctx context.Context, email, password string) (string, error) {
+func (u userUsecase) LoginUser(ctx context.Context, email, password string) (string, error) {
 	user, err := u.userRepository.GetUserByEmail(ctx, email)
 	if err != nil {
 		return "", err

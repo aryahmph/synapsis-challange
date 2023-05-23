@@ -33,3 +33,25 @@ func (d HTTPUserDelivery) addUser(c echo.Context) error {
 		Data: nid,
 	})
 }
+
+func (d HTTPUserDelivery) loginUser(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	user := &httpCommon.Login{}
+	if err := c.Bind(user); err != nil {
+		return err
+	}
+
+	if err := c.Validate(user); err != nil {
+		return err
+	}
+
+	token, err := d.userUCase.LoginUser(ctx, user.Email, user.Password)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusCreated, httpCommon.Response{
+		Data: token,
+	})
+}

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	configCommon "synapsis-challange/common/config"
 	httpCommon "synapsis-challange/common/http"
+	jwtCommon "synapsis-challange/common/jwt"
 	passwordCommon "synapsis-challange/common/password"
 	pgCommon "synapsis-challange/common/pg"
 	userDelivery "synapsis-challange/internal/delivery/user/http"
@@ -19,14 +20,14 @@ func main() {
 	pg, querier := pgCommon.New(cfg.DatabaseURL)
 	defer pg.Close()
 
-	//jwtManager := jwtCommon.New(cfg.JWTAccessToken)
+	jwtManager := jwtCommon.New(cfg.JWTAccessToken)
 	passwordManager := passwordCommon.New()
 
 	h := httpCommon.NewHTTPServer()
 	api := h.E.Group("/api/v1", middleware.Logger(), middleware.CORS())
 
 	ur := userRepo.NewPGUserRepository(querier)
-	uc := userUsecase.NewUserUsecase(ur, passwordManager)
+	uc := userUsecase.NewUserUsecase(ur, jwtManager, passwordManager)
 	userDelivery.NewHTTPUserDelivery(api, uc)
 
 	h.E.Logger.Fatal(h.E.StartServer(&http.Server{

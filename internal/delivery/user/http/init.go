@@ -12,6 +12,7 @@ type HTTPUserDelivery struct {
 func NewHTTPUserDelivery(g *echo.Group, userUCase userUsecase.Usecase) HTTPUserDelivery {
 	h := HTTPUserDelivery{userUCase: userUCase}
 	g.POST("/users", h.addUser)
+	g.POST("/auth", h.loginUser)
 
 	return h
 }
