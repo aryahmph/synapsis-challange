@@ -33,4 +33,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxN
 
 ### Get Cart
 GET http://localhost:4001/api/v1/users/carts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjg1MDAzNjEwfQ.X93G65xaYAk5E0C0GE86Rk-AsYDgflpTTlz70Of1va8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjg1MDA1MTY0fQ.sAt7gjfsz670gp1Ce0VBOrn4rgBjOoG8nrnyVFxu3iI
+
+### Delete Cart Item
+DELETE http://localhost:4001/api/v1/cart-items/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjg1MDA1MTY0fQ.sAt7gjfsz670gp1Ce0VBOrn4rgBjOoG8nrnyVFxu3iI
