@@ -18,7 +18,7 @@ func Auth(jwtManager *jwtCommon.JWTManager) echo.MiddlewareFunc {
 			// verify token is real from user
 			uid, err := jwtManager.Verify(idToken)
 			if err != nil {
-				return err
+				return errorCommon.NewUnauthorizedError("Token not valid")
 			}
 
 			c.Set(AUTH_USER, uid)
