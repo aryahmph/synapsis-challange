@@ -9,10 +9,13 @@ import (
 	jwtCommon "synapsis-challange/common/jwt"
 	passwordCommon "synapsis-challange/common/password"
 	pgCommon "synapsis-challange/common/pg"
+	cartItemDelivery "synapsis-challange/internal/delivery/cart-item/http"
 	productDelivery "synapsis-challange/internal/delivery/product/http"
 	userDelivery "synapsis-challange/internal/delivery/user/http"
+	cartItemRepo "synapsis-challange/internal/repository/cart-item/pg"
 	productRepo "synapsis-challange/internal/repository/product/pg"
 	userRepo "synapsis-challange/internal/repository/user/pg"
+	cartItemUsecase "synapsis-challange/internal/usecase/cart-item"
 	productUsecase "synapsis-challange/internal/usecase/product"
 	userUsecase "synapsis-challange/internal/usecase/user"
 	"time"
@@ -36,6 +39,10 @@ func main() {
 	pr := productRepo.NewPGProductRepository(querier)
 	pc := productUsecase.NewProductUsecase(pr)
 	productDelivery.NewHTTPProductDelivery(api, pc)
+
+	cir := cartItemRepo.NewPGPCartItemRepository(querier)
+	cic := cartItemUsecase.NewCartItemUsecase(cir)
+	cartItemDelivery.NewHTTPCartItemDelivery(api, cic, jwtManager)
 
 	h.E.Logger.Fatal(h.E.StartServer(&http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),

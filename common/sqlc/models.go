@@ -49,37 +49,10 @@ func (e *PaymentStatus) Scan(src interface{}) error {
 	return nil
 }
 
-type ProductCategory string
-
-const (
-	ProductCategoryMakananMinuman ProductCategory = "Makanan/Minuman"
-	ProductCategoryPakaian        ProductCategory = "Pakaian"
-	ProductCategoryTeknologi      ProductCategory = "Teknologi"
-)
-
-func (e *ProductCategory) Scan(src interface{}) error {
-	switch s := src.(type) {
-	case []byte:
-		*e = ProductCategory(s)
-	case string:
-		*e = ProductCategory(s)
-	default:
-		return fmt.Errorf("unsupported scan type for ProductCategory: %T", src)
-	}
-	return nil
-}
-
-type Cart struct {
-	ID        int32     `db:"id"`
-	UserID    int32     `db:"user_id"`
-	CreatedAt time.Time `db:"created_at"`
-	UpdatedAt time.Time `db:"updated_at"`
-}
-
 type CartItem struct {
 	ID        int32     `db:"id"`
-	CartID    int32     `db:"cart_id"`
 	ProductID int32     `db:"product_id"`
+	UserID    int32     `db:"user_id"`
 	Quantity  int32     `db:"quantity"`
 	CreatedAt time.Time `db:"created_at"`
 	UpdatedAt time.Time `db:"updated_at"`
@@ -113,13 +86,13 @@ type Payment struct {
 }
 
 type Product struct {
-	ID          int32           `db:"id"`
-	Name        string          `db:"name"`
-	Price       float64         `db:"price"`
-	Description string          `db:"description"`
-	Category    ProductCategory `db:"category"`
-	CreatedAt   time.Time       `db:"created_at"`
-	UpdatedAt   time.Time       `db:"updated_at"`
+	ID          int32     `db:"id"`
+	Name        string    `db:"name"`
+	Price       float64   `db:"price"`
+	Description string    `db:"description"`
+	Category    string    `db:"category"`
+	CreatedAt   time.Time `db:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at"`
 }
 
 type User struct {

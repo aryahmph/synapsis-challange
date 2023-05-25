@@ -19,4 +19,14 @@ Content-Type: application/json
 }
 
 ### List products
-GET http://localhost:4001/api/v1/products?category=Apaya
+GET http://localhost:4001/api/v1/products
+
+### Add cart item
+POST http://localhost:4001/api/v1/cart-items
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjg0OTg4OTk1fQ.VYRlapx7_jHvAYqmgGCJ7336xpe-j2llJfeYdk9cFQI
+
+{
+  "product_id": 1,
+  "quantity": 2
+}

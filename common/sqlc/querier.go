@@ -9,9 +9,18 @@ import (
 )
 
 type Querier interface {
+	CreateCartItem(ctx context.Context, arg CreateCartItemParams) (int32, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (int32, error)
+	DeleteCartItem(ctx context.Context, id int32) error
+	GetCartItem(ctx context.Context, id int32) (CartItem, error)
+	GetProduct(ctx context.Context, id int32) (Product, error)
 	GetUser(ctx context.Context, id int32) (GetUserRow, error)
 	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
+	ListCartItemsByCartID(ctx context.Context, userID int32) ([]CartItem, error)
+	ListProducts(ctx context.Context) ([]Product, error)
+	ListProductsByCategory(ctx context.Context, category string) ([]Product, error)
+	UpdateCartItemQuantity(ctx context.Context, arg UpdateCartItemQuantityParams) error
+	VerifyAvailableCartItem(ctx context.Context, arg VerifyAvailableCartItemParams) (int32, error)
 }
 
 var _ Querier = (*Queries)(nil)
