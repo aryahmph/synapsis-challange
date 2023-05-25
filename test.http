@@ -24,9 +24,13 @@ GET http://localhost:4001/api/v1/products
 ### Add cart item
 POST http://localhost:4001/api/v1/cart-items
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjg0OTg4OTk1fQ.VYRlapx7_jHvAYqmgGCJ7336xpe-j2llJfeYdk9cFQI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjg1MDAzNjEwfQ.X93G65xaYAk5E0C0GE86Rk-AsYDgflpTTlz70Of1va8
 
 {
-  "product_id": 1,
+  "product_id": 2,
   "quantity": 2
 }
+
+### Get Cart
+GET http://localhost:4001/api/v1/users/carts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNjg1MDAzNjEwfQ.X93G65xaYAk5E0C0GE86Rk-AsYDgflpTTlz70Of1va8

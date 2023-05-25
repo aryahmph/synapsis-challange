@@ -16,7 +16,7 @@ type Querier interface {
 	GetProduct(ctx context.Context, id int32) (Product, error)
 	GetUser(ctx context.Context, id int32) (GetUserRow, error)
 	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
-	ListCartItemsByCartID(ctx context.Context, userID int32) ([]CartItem, error)
+	ListCartItemsByUserID(ctx context.Context, userID int32) ([]CartItem, error)
 	ListProducts(ctx context.Context) ([]Product, error)
 	ListProductsByCategory(ctx context.Context, category string) ([]Product, error)
 	UpdateCartItemQuantity(ctx context.Context, arg UpdateCartItemQuantityParams) error

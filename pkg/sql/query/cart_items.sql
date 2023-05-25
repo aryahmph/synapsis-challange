@@ -21,7 +21,7 @@ UPDATE cart_items
 SET quantity = quantity + $2
 WHERE id = $1;
 
--- name: ListCartItemsByCartID :many
+-- name: ListCartItemsByUserID :many
 SELECT id, product_id, user_id, quantity, created_at, updated_at
 FROM cart_items
 WHERE user_id = $1;

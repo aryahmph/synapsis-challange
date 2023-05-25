@@ -10,6 +10,6 @@ type Repository interface {
 	GetCartItem(ctx context.Context, id int32) (cartItemModel.CartItem, error)
 	VerifyAvailableCartItem(ctx context.Context, productId, userId int32) (int32, error)
 	UpdateCartItemQuantity(ctx context.Context, id, quantity int32) error
-	ListCartItemsByCartID(ctx context.Context, cartId int32) ([]cartItemModel.CartItem, error)
+	ListCartItemsByUserID(ctx context.Context, cartId int32) ([]cartItemModel.CartItem, error)
 	DeleteCartItem(ctx context.Context, id int32) error
 }

@@ -60,14 +60,14 @@ func (q *Queries) GetCartItem(ctx context.Context, id int32) (CartItem, error) {
 	return i, err
 }
 
-const listCartItemsByCartID = `-- name: ListCartItemsByCartID :many
+const listCartItemsByUserID = `-- name: ListCartItemsByUserID :many
 SELECT id, product_id, user_id, quantity, created_at, updated_at
 FROM cart_items
 WHERE user_id = $1
 `
 
-func (q *Queries) ListCartItemsByCartID(ctx context.Context, userID int32) ([]CartItem, error) {
-	rows, err := q.db.Query(ctx, listCartItemsByCartID, userID)
+func (q *Queries) ListCartItemsByUserID(ctx context.Context, userID int32) ([]CartItem, error) {
+	rows, err := q.db.Query(ctx, listCartItemsByUserID, userID)
 	if err != nil {
 		return nil, err
 	}

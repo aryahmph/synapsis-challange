@@ -50,8 +50,8 @@ func (r pgCartItemRepository) UpdateCartItemQuantity(ctx context.Context, id, qu
 	})
 }
 
-func (r pgCartItemRepository) ListCartItemsByCartID(ctx context.Context, cartId int32) ([]cartItemModel.CartItem, error) {
-	list, err := r.querier.ListCartItemsByCartID(ctx, cartId)
+func (r pgCartItemRepository) ListCartItemsByUserID(ctx context.Context, cartId int32) ([]cartItemModel.CartItem, error) {
+	list, err := r.querier.ListCartItemsByUserID(ctx, cartId)
 	if err != nil {
 		return nil, err
 	}

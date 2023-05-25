@@ -32,17 +32,17 @@ func main() {
 	h := httpCommon.NewHTTPServer()
 	api := h.E.Group("/api/v1", middleware.Logger(), middleware.CORS())
 
-	ur := userRepo.NewPGUserRepository(querier)
-	uc := userUsecase.NewUserUsecase(ur, jwtManager, passwordManager)
-	userDelivery.NewHTTPUserDelivery(api, uc)
-
 	pr := productRepo.NewPGProductRepository(querier)
 	pc := productUsecase.NewProductUsecase(pr)
 	productDelivery.NewHTTPProductDelivery(api, pc)
 
 	cir := cartItemRepo.NewPGPCartItemRepository(querier)
-	cic := cartItemUsecase.NewCartItemUsecase(cir)
+	cic := cartItemUsecase.NewCartItemUsecase(cir, pr)
 	cartItemDelivery.NewHTTPCartItemDelivery(api, cic, jwtManager)
+
+	ur := userRepo.NewPGUserRepository(querier)
+	uc := userUsecase.NewUserUsecase(ur, jwtManager, passwordManager)
+	userDelivery.NewHTTPUserDelivery(api, uc, cic, jwtManager)
 
 	h.E.Logger.Fatal(h.E.StartServer(&http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),
