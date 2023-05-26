@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	ErrGetOrderUserNotAuthorized error = errors.New("GET_ORDER.USER_NOT_AUTHORIZED")
+	ErrGetOrder_UserNotAuthorized error = errors.New("GET_ORDER.USER_NOT_AUTHORIZED")
 )
 
 func (u orderUsecase) GetOrder(ctx context.Context, id, userId int32) (orderModel.FullOrder, error) {
@@ -17,7 +17,7 @@ func (u orderUsecase) GetOrder(ctx context.Context, id, userId int32) (orderMode
 	}
 
 	if order.ID != userId {
-		return orderModel.FullOrder{}, ErrGetOrderUserNotAuthorized
+		return orderModel.FullOrder{}, ErrGetOrder_UserNotAuthorized
 	}
 
 	payment, err := u.paymentRepository.GetPayment(ctx, order.PaymentID)
