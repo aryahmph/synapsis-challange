@@ -79,9 +79,9 @@ paths:
     get:
       tags:
         - Product
-      summary: List products
+      summary: 'List products'
       parameters:
-        - name: category
+        - name: 'category'
           description: 'Filter by category'
           in: query
           required: false
@@ -98,6 +98,25 @@ paths:
                     items:
                       $ref: '#/components/schemas/Product'
 
+  /cart-items:
+    post:
+      tags:
+        - Cart Item
+      summary: 'Add product to shopping cart'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: integer
+                    description: 'Created cart item id'
+                    nullable: false
 
 components:
   schemas:
@@ -118,3 +137,8 @@ components:
           type: string
         updated_at:
           type: string
+  securitySchemes:
+    'bearerAuth':
+      type: 'http'
+      scheme: 'bearer'
+      bearerFormat: 'JWT'
