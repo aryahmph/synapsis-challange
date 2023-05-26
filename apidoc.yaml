@@ -75,3 +75,46 @@ paths:
                     description: 'Created user id'
                     nullable: false
 
+  /products:
+    get:
+      tags:
+        - Product
+      summary: List products
+      parameters:
+        - name: category
+          description: 'Filter by category'
+          in: query
+          required: false
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+
+components:
+  schemas:
+    'Product':
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        category:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
