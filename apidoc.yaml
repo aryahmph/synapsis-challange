@@ -75,6 +75,27 @@ paths:
                     description: 'Created user id'
                     nullable: false
 
+  /users/carts:
+    get:
+      tags:
+        - User
+        - Cart Item
+      summary: 'List of cart item by user'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CartItem'
+
   /products:
     get:
       tags:
@@ -133,6 +154,20 @@ components:
           type: string
         category:
           type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    'CartItem':
+      type: object
+      properties:
+        id:
+          type: integer
+        product:
+          items:
+            $ref: '#/components/schemas/Product'
+        quantity:
+          type: integer
         created_at:
           type: string
         updated_at:
