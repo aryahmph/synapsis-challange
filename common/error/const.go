@@ -14,5 +14,6 @@ var (
 		cartItemUsecase.ErrDeleteCartItem_UserNotAuthorized: NewUnauthorizedError("DELETE_CART_ITEM.USER_NOT_AUTHORIZED"),
 
 		orderUsecase.ErrGetOrder_UserNotAuthorized: NewUnauthorizedError("GET_ORDER.USER_NOT_AUTHORIZED"),
+		orderUsecase.ErrCreateOrder_OrderItemEmpty: NewInvariantError("CREATE_ORDER.ORDER_ITEM_EMPTY"),
 	}
 )
