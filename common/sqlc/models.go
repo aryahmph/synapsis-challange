@@ -16,6 +16,7 @@ const (
 	OrderStatusProcessing OrderStatus = "Processing"
 	OrderStatusShipped    OrderStatus = "Shipped"
 	OrderStatusDelivered  OrderStatus = "Delivered"
+	OrderStatusExpired    OrderStatus = "Expired"
 )
 
 func (e *OrderStatus) Scan(src interface{}) error {
@@ -35,6 +36,7 @@ type PaymentStatus string
 const (
 	PaymentStatusPending   PaymentStatus = "Pending"
 	PaymentStatusCompleted PaymentStatus = "Completed"
+	PaymentStatusExpired   PaymentStatus = "Expired"
 )
 
 func (e *PaymentStatus) Scan(src interface{}) error {
@@ -61,7 +63,7 @@ type CartItem struct {
 type Order struct {
 	ID        int32       `db:"id"`
 	UserID    int32       `db:"user_id"`
-	PaymentID int32       `db:"payment_id"`
+	PaymentID string      `db:"payment_id"`
 	Status    OrderStatus `db:"status"`
 	CreatedAt time.Time   `db:"created_at"`
 	UpdatedAt time.Time   `db:"updated_at"`
@@ -77,9 +79,10 @@ type OrderItem struct {
 }
 
 type Payment struct {
-	ID        int32         `db:"id"`
+	ID        string        `db:"id"`
 	UserID    int32         `db:"user_id"`
-	Amount    int32         `db:"amount"`
+	VaNumber  string        `db:"va_number"`
+	Amount    float64       `db:"amount"`
 	Status    PaymentStatus `db:"status"`
 	CreatedAt time.Time     `db:"created_at"`
 	UpdatedAt time.Time     `db:"updated_at"`

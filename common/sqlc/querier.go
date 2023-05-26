@@ -10,9 +10,13 @@ import (
 
 type Querier interface {
 	CreateCartItem(ctx context.Context, arg CreateCartItemParams) (int32, error)
+	CreateOrder(ctx context.Context, arg CreateOrderParams) (int32, error)
+	CreateOrderItem(ctx context.Context, arg CreateOrderItemParams) (int32, error)
+	CreatePayment(ctx context.Context, arg CreatePaymentParams) error
 	CreateUser(ctx context.Context, arg CreateUserParams) (int32, error)
 	DeleteCartItem(ctx context.Context, id int32) error
 	GetCartItem(ctx context.Context, id int32) (CartItem, error)
+	GetPayment(ctx context.Context, id string) (Payment, error)
 	GetProduct(ctx context.Context, id int32) (Product, error)
 	GetUser(ctx context.Context, id int32) (GetUserRow, error)
 	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
