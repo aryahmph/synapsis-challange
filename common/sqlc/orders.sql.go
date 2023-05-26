@@ -45,3 +45,56 @@ func (q *Queries) CreateOrderItem(ctx context.Context, arg CreateOrderItemParams
 	err := row.Scan(&id)
 	return id, err
 }
+
+const getOrder = `-- name: GetOrder :one
+SELECT id, user_id, payment_id, status, created_at, updated_at
+FROM orders
+WHERE id = $1
+`
+
+func (q *Queries) GetOrder(ctx context.Context, id int32) (Order, error) {
+	row := q.db.QueryRow(ctx, getOrder, id)
+	var i Order
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.PaymentID,
+		&i.Status,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const listOrderItemsByOrderID = `-- name: ListOrderItemsByOrderID :many
+SELECT id, order_id, product_id, quantity, created_at, updated_at
+FROM order_items
+WHERE order_id = $1
+`
+
+func (q *Queries) ListOrderItemsByOrderID(ctx context.Context, orderID int32) ([]OrderItem, error) {
+	rows, err := q.db.Query(ctx, listOrderItemsByOrderID, orderID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []OrderItem{}
+	for rows.Next() {
+		var i OrderItem
+		if err := rows.Scan(
+			&i.ID,
+			&i.OrderID,
+			&i.ProductID,
+			&i.Quantity,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}

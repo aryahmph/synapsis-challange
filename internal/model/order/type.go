@@ -1,6 +1,10 @@
 package order
 
-import "time"
+import (
+	paymentModel "synapsis-challange/internal/model/payment"
+	productModel "synapsis-challange/internal/model/product"
+	"time"
+)
 
 const (
 	OrderStatusPending    OrderStatus = "Pending"
@@ -40,5 +44,23 @@ type (
 		OrderID   int32
 		ProductID int32
 		Quantity  int32
+	}
+
+	FullOrderItem struct {
+		ID        int32
+		Quantity  int32
+		Product   productModel.Product
+		CreatedAt time.Time
+		UpdatedAt time.Time
+	}
+
+	FullOrder struct {
+		ID         int32
+		UserID     int32
+		Payment    paymentModel.Payment
+		OrderItems []FullOrderItem
+		Status     OrderStatus
+		CreatedAt  time.Time
+		UpdatedAt  time.Time
 	}
 )

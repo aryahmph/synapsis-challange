@@ -17,6 +17,7 @@ import (
 	userDelivery "synapsis-challange/internal/delivery/user/http"
 	cartItemRepo "synapsis-challange/internal/repository/cart-item/pg"
 	orderRepo "synapsis-challange/internal/repository/order/pg"
+	paymentRepo "synapsis-challange/internal/repository/payment/pg"
 	productRepo "synapsis-challange/internal/repository/product/pg"
 	userRepo "synapsis-challange/internal/repository/user/pg"
 	cartItemUsecase "synapsis-challange/internal/usecase/cart-item"
@@ -51,8 +52,10 @@ func main() {
 	uc := userUsecase.NewUserUsecase(ur, jwtManager, passwordManager)
 	userDelivery.NewHTTPUserDelivery(api, uc, cic, jwtManager)
 
+	pyr := paymentRepo.NewPGPaymentRepository(store.Querier)
+
 	or := orderRepo.NewPGOrderRepository(store)
-	oc := orderUsecase.NewOrderUsecase(or, cir, pr, xenditManager, uuidGenerator)
+	oc := orderUsecase.NewOrderUsecase(or, cir, pr, pyr, xenditManager, uuidGenerator)
 	orderDelivery.NewHTTPOrderDelivery(api, oc, jwtManager)
 
 	h.E.Logger.Fatal(h.E.StartServer(&http.Server{

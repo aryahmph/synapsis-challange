@@ -7,3 +7,13 @@ RETURNING id;
 INSERT INTO order_items (order_id, product_id, quantity)
 VALUES ($1, $2, $3)
 RETURNING id;
+
+-- name: GetOrder :one
+SELECT id, user_id, payment_id, status, created_at, updated_at
+FROM orders
+WHERE id = $1;
+
+-- name: ListOrderItemsByOrderID :many
+SELECT id, order_id, product_id, quantity, created_at, updated_at
+FROM order_items
+WHERE order_id = $1;

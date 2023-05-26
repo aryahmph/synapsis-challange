@@ -13,7 +13,9 @@ type HTTPOrderDelivery struct {
 
 func NewHTTPOrderDelivery(g *echo.Group, orderUCase orderUsecase.Usecase, jwtManager *jwtCommon.JWTManager) HTTPOrderDelivery {
 	h := HTTPOrderDelivery{orderUCase: orderUCase}
+
 	g.POST("/orders", h.addOrder, httpCommon.Auth(jwtManager))
+	g.GET("/orders/:id", h.getOrder, httpCommon.Auth(jwtManager))
 
 	return h
 }

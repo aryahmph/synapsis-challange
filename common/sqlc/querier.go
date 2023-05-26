@@ -16,11 +16,13 @@ type Querier interface {
 	CreateUser(ctx context.Context, arg CreateUserParams) (int32, error)
 	DeleteCartItem(ctx context.Context, id int32) error
 	GetCartItem(ctx context.Context, id int32) (CartItem, error)
+	GetOrder(ctx context.Context, id int32) (Order, error)
 	GetPayment(ctx context.Context, id string) (Payment, error)
 	GetProduct(ctx context.Context, id int32) (Product, error)
 	GetUser(ctx context.Context, id int32) (GetUserRow, error)
 	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
 	ListCartItemsByUserID(ctx context.Context, userID int32) ([]CartItem, error)
+	ListOrderItemsByOrderID(ctx context.Context, orderID int32) ([]OrderItem, error)
 	ListProducts(ctx context.Context) ([]Product, error)
 	ListProductsByCategory(ctx context.Context, category string) ([]Product, error)
 	UpdateCartItemQuantity(ctx context.Context, arg UpdateCartItemQuantityParams) error
