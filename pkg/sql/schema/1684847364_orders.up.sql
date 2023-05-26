@@ -1,10 +1,10 @@
-CREATE TYPE order_status AS ENUM ('Pending', 'Processing', 'Shipped','Delivered');
+CREATE TYPE order_status AS ENUM ('Pending', 'Processing', 'Shipped','Delivered', 'Expired');
 
 CREATE TABLE IF NOT EXISTS orders
 (
     id         SERIAL PRIMARY KEY,
     user_id    INT          NOT NULL REFERENCES users (id),
-    payment_id INT          NOT NULL REFERENCES payments (id),
+    payment_id VARCHAR(36)  NOT NULL REFERENCES payments (id),
     status     order_status NOT NULL DEFAULT 'Pending',
     created_at TIMESTAMP    NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP    NOT NULL DEFAULT NOW()
