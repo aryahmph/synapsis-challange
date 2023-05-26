@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Synapsis.id Challange API Documentation
+  description: Synapsis.id Challange API Documentation
+  version: 1.0.0
+  contact:
+    name: 'Arya Yunanta'
+    email: 'aryayun90@gmail.com'
+    url: 'github.com/aryahmph'
+servers:
+  - url: 'http://localhost:4001/api/v1'
+paths:
+  /auth:
+    post:
+      tags:
+        - User
+      summary: 'User Login'
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: 'Success login'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: 'JWT access token'
+                    nullable: false
+  /users:
+    post:
+      tags:
+        - User
+      summary: 'Create user'
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+                address:
+                  type: string
+              required:
+                - email
+                - password
+                - name
+                - address
+      responses:
+        '200':
+          description: 'Success create user'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: integer
+                    description: 'Created user id'
+                    nullable: false
+
