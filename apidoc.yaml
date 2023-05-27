@@ -126,6 +126,18 @@ paths:
       summary: 'Add product to shopping cart'
       security:
         - bearerAuth: [ ]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+              required:
+                - product_id
+                - quantity
       responses:
         '201':
           description: 'Success'
