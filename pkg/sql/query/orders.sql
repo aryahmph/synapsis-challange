@@ -27,5 +27,6 @@ WHERE order_id = $1;
 
 -- name: UpdateOrderStatus :exec
 UPDATE orders
-SET status = $2
+SET status     = $2,
+    updated_at = NOW()
 WHERE id = $1;

@@ -10,5 +10,6 @@ LIMIT 1;
 
 -- name: UpdatePaymentStatus :exec
 UPDATE payments
-SET status = $2
+SET status     = $2,
+    updated_at = NOW()
 WHERE id = $1;

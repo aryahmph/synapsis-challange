@@ -123,7 +123,8 @@ func (q *Queries) ListOrderItemsByOrderID(ctx context.Context, orderID int32) ([
 
 const updateOrderStatus = `-- name: UpdateOrderStatus :exec
 UPDATE orders
-SET status = $2
+SET status     = $2,
+    updated_at = NOW()
 WHERE id = $1
 `
 

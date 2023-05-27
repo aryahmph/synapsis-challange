@@ -55,7 +55,8 @@ func (q *Queries) GetPayment(ctx context.Context, id string) (Payment, error) {
 
 const updatePaymentStatus = `-- name: UpdatePaymentStatus :exec
 UPDATE payments
-SET status = $2
+SET status     = $2,
+    updated_at = NOW()
 WHERE id = $1
 `
 
