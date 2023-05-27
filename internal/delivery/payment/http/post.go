@@ -10,7 +10,7 @@ import (
 func (d HTTPPaymentDelivery) paymentPaidCallback(c echo.Context) error {
 	ctx := c.Request().Context()
 
-	payload := httpPaymentCommon.PaymentCallback{}
+	payload := &httpPaymentCommon.PaymentCallback{}
 	if err := c.Bind(payload); err != nil {
 		return err
 	}
