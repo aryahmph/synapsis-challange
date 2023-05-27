@@ -30,3 +30,10 @@ func (r pgPaymentRepository) GetPayment(ctx context.Context, id string) (payment
 		UpdatedAt: payment.UpdatedAt,
 	}, nil
 }
+
+func (r pgPaymentRepository) UpdatePaymentStatus(ctx context.Context, arg paymentModel.UpdatePaymentStatus) error {
+	return r.querier.UpdatePaymentStatus(ctx, sqlc.UpdatePaymentStatusParams{
+		ID:     arg.ID,
+		Status: sqlc.PaymentStatus(arg.Status),
+	})
+}

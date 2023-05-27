@@ -17,6 +17,7 @@ type Querier interface {
 	DeleteCartItem(ctx context.Context, id int32) error
 	GetCartItem(ctx context.Context, id int32) (CartItem, error)
 	GetOrder(ctx context.Context, id int32) (Order, error)
+	GetOrderByPaymentID(ctx context.Context, paymentID string) (Order, error)
 	GetPayment(ctx context.Context, id string) (Payment, error)
 	GetProduct(ctx context.Context, id int32) (Product, error)
 	GetUser(ctx context.Context, id int32) (GetUserRow, error)
@@ -26,6 +27,8 @@ type Querier interface {
 	ListProducts(ctx context.Context) ([]Product, error)
 	ListProductsByCategory(ctx context.Context, category string) ([]Product, error)
 	UpdateCartItemQuantity(ctx context.Context, arg UpdateCartItemQuantityParams) error
+	UpdateOrderStatus(ctx context.Context, arg UpdateOrderStatusParams) error
+	UpdatePaymentStatus(ctx context.Context, arg UpdatePaymentStatusParams) error
 	VerifyAvailableCartItem(ctx context.Context, arg VerifyAvailableCartItemParams) (int32, error)
 }
 

@@ -13,6 +13,7 @@ import (
 	xenditCommon "synapsis-challange/common/xendit"
 	cartItemDelivery "synapsis-challange/internal/delivery/cart-item/http"
 	orderDelivery "synapsis-challange/internal/delivery/order/http"
+	paymentDelivery "synapsis-challange/internal/delivery/payment/http"
 	productDelivery "synapsis-challange/internal/delivery/product/http"
 	userDelivery "synapsis-challange/internal/delivery/user/http"
 	cartItemRepo "synapsis-challange/internal/repository/cart-item/pg"
@@ -22,6 +23,7 @@ import (
 	userRepo "synapsis-challange/internal/repository/user/pg"
 	cartItemUsecase "synapsis-challange/internal/usecase/cart-item"
 	orderUsecase "synapsis-challange/internal/usecase/order"
+	paymentUsecase "synapsis-challange/internal/usecase/payment"
 	productUsecase "synapsis-challange/internal/usecase/product"
 	userUsecase "synapsis-challange/internal/usecase/user"
 	"time"
@@ -53,10 +55,12 @@ func main() {
 	userDelivery.NewHTTPUserDelivery(api, uc, cic, jwtManager)
 
 	pyr := paymentRepo.NewPGPaymentRepository(store.Querier)
-
 	or := orderRepo.NewPGOrderRepository(store)
 	oc := orderUsecase.NewOrderUsecase(or, cir, pr, pyr, xenditManager, uuidGenerator)
 	orderDelivery.NewHTTPOrderDelivery(api, oc, jwtManager)
+
+	pyc := paymentUsecase.NewPaymentUsecase(or, pyr)
+	paymentDelivery.NewHTTPPaymentDelivery(api, pyc)
 
 	h.E.Logger.Fatal(h.E.StartServer(&http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),

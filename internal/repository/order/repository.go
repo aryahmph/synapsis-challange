@@ -10,5 +10,7 @@ import (
 type Repository interface {
 	CreateOrder(ctx context.Context, order orderModel.AddOrder, payment paymentModel.AddPayment, items []cartItemModel.CartItem) (int32, error)
 	GetOrder(ctx context.Context, id int32) (orderModel.Order, error)
+	GetOrderByPaymentID(ctx context.Context, paymentId string) (orderModel.Order, error)
 	ListOrderItemsByOrderID(ctx context.Context, orderId int32) ([]orderModel.OrderItem, error)
+	UpdateOrderStatus(ctx context.Context, arg orderModel.UpdateOrderStatus) error
 }

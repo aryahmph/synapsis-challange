@@ -78,6 +78,21 @@ func (r pgOrderRepository) GetOrder(ctx context.Context, id int32) (orderModel.O
 	}, nil
 }
 
+func (r pgOrderRepository) GetOrderByPaymentID(ctx context.Context, paymentId string) (orderModel.Order, error) {
+	order, err := r.querier.Querier.GetOrderByPaymentID(ctx, paymentId)
+	if err != nil {
+		return orderModel.Order{}, err
+	}
+	return orderModel.Order{
+		ID:        order.ID,
+		UserID:    order.UserID,
+		PaymentID: order.PaymentID,
+		Status:    orderModel.OrderStatus(order.Status),
+		CreatedAt: order.CreatedAt,
+		UpdatedAt: order.UpdatedAt,
+	}, nil
+}
+
 func (r pgOrderRepository) ListOrderItemsByOrderID(ctx context.Context, orderId int32) ([]orderModel.OrderItem, error) {
 	list, err := r.querier.ListOrderItemsByOrderID(ctx, orderId)
 	if err != nil {
@@ -89,4 +104,11 @@ func (r pgOrderRepository) ListOrderItemsByOrderID(ctx context.Context, orderId 
 		items = append(items, orderModel.OrderItem(item))
 	}
 	return items, nil
+}
+
+func (r pgOrderRepository) UpdateOrderStatus(ctx context.Context, arg orderModel.UpdateOrderStatus) error {
+	return r.querier.UpdateOrderStatus(ctx, sqlc.UpdateOrderStatusParams{
+		ID:     arg.ID,
+		Status: sqlc.OrderStatus(arg.Status),
+	})
 }

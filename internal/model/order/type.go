@@ -31,6 +31,11 @@ type (
 		PaymentID string
 	}
 
+	UpdateOrderStatus struct {
+		ID     int32
+		Status OrderStatus
+	}
+
 	OrderItem struct {
 		ID        int32
 		OrderID   int32

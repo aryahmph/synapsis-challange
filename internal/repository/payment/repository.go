@@ -7,4 +7,5 @@ import (
 
 type Repository interface {
 	GetPayment(ctx context.Context, id string) (paymentModel.Payment, error)
+	UpdatePaymentStatus(ctx context.Context, arg paymentModel.UpdatePaymentStatus) error
 }

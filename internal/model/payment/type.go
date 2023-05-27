@@ -26,4 +26,9 @@ type (
 		VaNumber string
 		Amount   float64
 	}
+
+	UpdatePaymentStatus struct {
+		ID     string
+		Status PaymentStatus
+	}
 )

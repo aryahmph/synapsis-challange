@@ -50,10 +50,32 @@ const getOrder = `-- name: GetOrder :one
 SELECT id, user_id, payment_id, status, created_at, updated_at
 FROM orders
 WHERE id = $1
+LIMIT 1
 `
 
 func (q *Queries) GetOrder(ctx context.Context, id int32) (Order, error) {
 	row := q.db.QueryRow(ctx, getOrder, id)
+	var i Order
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.PaymentID,
+		&i.Status,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getOrderByPaymentID = `-- name: GetOrderByPaymentID :one
+SELECT id, user_id, payment_id, status, created_at, updated_at
+FROM orders
+WHERE payment_id = $1
+LIMIT 1
+`
+
+func (q *Queries) GetOrderByPaymentID(ctx context.Context, paymentID string) (Order, error) {
+	row := q.db.QueryRow(ctx, getOrderByPaymentID, paymentID)
 	var i Order
 	err := row.Scan(
 		&i.ID,
@@ -97,4 +119,20 @@ func (q *Queries) ListOrderItemsByOrderID(ctx context.Context, orderID int32) ([
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateOrderStatus = `-- name: UpdateOrderStatus :exec
+UPDATE orders
+SET status = $2
+WHERE id = $1
+`
+
+type UpdateOrderStatusParams struct {
+	ID     int32       `db:"id"`
+	Status OrderStatus `db:"status"`
+}
+
+func (q *Queries) UpdateOrderStatus(ctx context.Context, arg UpdateOrderStatusParams) error {
+	_, err := q.db.Exec(ctx, updateOrderStatus, arg.ID, arg.Status)
+	return err
 }
