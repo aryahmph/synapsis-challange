@@ -16,7 +16,7 @@ func (u orderUsecase) GetOrder(ctx context.Context, id, userId int32) (orderMode
 		return orderModel.FullOrder{}, err
 	}
 
-	if order.ID != userId {
+	if order.UserID != userId {
 		return orderModel.FullOrder{}, ErrGetOrder_UserNotAuthorized
 	}
 
