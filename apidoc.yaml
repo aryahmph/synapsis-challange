@@ -28,7 +28,7 @@ paths:
                 - email
                 - password
       responses:
-        '200':
+        '201':
           description: 'Success login'
           content:
             'application/json':
@@ -63,7 +63,7 @@ paths:
                 - name
                 - address
       responses:
-        '200':
+        '201':
           description: 'Success create user'
           content:
             'application/json':
@@ -127,7 +127,7 @@ paths:
       security:
         - bearerAuth: [ ]
       responses:
-        '200':
+        '201':
           description: 'Success'
           content:
             'application/json':
@@ -138,6 +138,69 @@ paths:
                     type: integer
                     description: 'Created cart item id'
                     nullable: false
+    delete:
+      tags:
+        - Cart Item
+      summary: 'Delete cart item'
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: 'cartId'
+          in: path
+          schema:
+            type: string
+            required: true
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: integer
+                    description: 'Deleted cart item id'
+                    nullable: false
+  /orders:
+    post:
+      tags:
+        - Order
+      summary: 'Create order from shpping cart'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '201':
+          description: 'Success'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+    get:
+      tags:
+        - Order
+      summary: 'Get order detail'
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: 'orderId'
+          in: path
+          schema:
+            type: string
+            required: true
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FullOrder'
 
 components:
   schemas:
@@ -168,6 +231,65 @@ components:
             $ref: '#/components/schemas/Product'
         quantity:
           type: integer
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    'Order':
+      type: object
+      properties:
+        id:
+          type: integer
+        va:
+          type: string
+          description: 'Virtual Account number payment'
+        amount:
+          type: number
+    'Payment':
+      type: object
+      properties:
+        id:
+          type: string
+        va_number:
+          type: string
+        amount:
+          type: number
+        status:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    'OrderItem':
+      type: object
+      properties:
+        id:
+          type: integer
+        product_id:
+          type: integer
+        quantity:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    'FullOrder':
+      type: object
+      properties:
+        id:
+          type: integer
+        payment:
+          $ref: '#/components/schemas/Payment'
+        order_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        status:
+          type: string
         created_at:
           type: string
         updated_at:
